@@ -20,6 +20,8 @@ namespace ClincProject.Infrastructure
             services.AddTransient<IStatusHistoryService, StatusHistoryService>();
             services.AddTransient<IDocumentTypeService, DocumentTypeService>();
             services.AddTransient<IDocumentService, DocumentService>();
+            services.AddTransient<ICusAuthenticationService, CusAuthenticationService>();
+
             return services;
         }
     }

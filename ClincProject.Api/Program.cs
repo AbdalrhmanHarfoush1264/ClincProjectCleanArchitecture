@@ -13,7 +13,21 @@ builder.Services.AddSwaggerGen();
 
 #region Dependency Injections
 builder.Services.AddInfrastructureDependencies(builder.Configuration)
-    .AddServiceDependencies().AddCoreDependencies();
+    .AddServiceDependencies().AddCoreDependencies().AddServiceRegisteration(builder.Configuration);
+#endregion
+
+#region CORS
+var cors1 = "_cors1";
+builder.Services.AddCors(opt =>
+{
+    opt.AddPolicy(name: cors1,
+        policy =>
+        {
+            policy.AllowAnyOrigin();
+            policy.AllowAnyHeader();
+            policy.AllowAnyMethod();
+        });
+});
 #endregion
 var app = builder.Build();
 
@@ -26,6 +40,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseMiddleware<ErrorHandlerMiddleWare>();
 app.UseHttpsRedirection();
+
+app.UseCors(cors1);
 
 app.UseAuthorization();
 
