@@ -14,6 +14,10 @@
     <Folder Include="Features\ClinicDepartments\Queries\Validatiors\" />
     <Folder Include="Features\Doctors\Queries\Validatiors\" />
     <Folder Include="Features\Schedules\Queries\Validatiors\" />
+    <Folder Include="Features\Users\Queries\Handlers\" />
+    <Folder Include="Features\Users\Queries\Models\" />
+    <Folder Include="Features\Users\Queries\Responses\" />
+    <Folder Include="Mapping\Users\QueryMapping\" />
   </ItemGroup>
 
   <ItemGroup>

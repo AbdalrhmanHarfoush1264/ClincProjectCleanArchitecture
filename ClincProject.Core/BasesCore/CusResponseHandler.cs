@@ -35,8 +35,19 @@ namespace ClincProject.Core.BasesCore
             return new CusResponse<T>()
             {
                 StatusCode = HttpStatusCode.NotFound,
-                Successed = true,
+                Successed = false,
                 Message = message == null ? "Not Found." : message
+            };
+        }
+
+        public CusResponse<T> Created<T>(T entity)
+        {
+            return new CusResponse<T>()
+            {
+                StatusCode = HttpStatusCode.Created,
+                Successed = true,
+                Data = entity,
+                Message = "Added Successed"
             };
         }
 
