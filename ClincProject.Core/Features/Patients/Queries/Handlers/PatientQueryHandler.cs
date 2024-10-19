@@ -71,9 +71,7 @@ namespace ClincProject.Core.Features.Patients.Queries.Handlers
 
         public async Task<PaginatedResult<GetPatientsPaginatedListResponse>> Handle(GetPatientsPaginatedListQuery request, CancellationToken cancellationToken)
         {
-            //try
-            //{
-            //You can consider him a mapper in database.
+
             Expression<Func<Patient, GetPatientsPaginatedListResponse>> expression =
                  entity => new GetPatientsPaginatedListResponse(entity.PatientId,
                  entity.FirstName, entity.LastName, entity.Email);
@@ -83,11 +81,7 @@ namespace ClincProject.Core.Features.Patients.Queries.Handlers
                 request.PageSize);
 
             return paginatedList;
-            //}
-            //catch (Exception ex)
-            //{
-            //    throw new Exception(ex.Message);
-            //}
+
         }
 
         #endregion

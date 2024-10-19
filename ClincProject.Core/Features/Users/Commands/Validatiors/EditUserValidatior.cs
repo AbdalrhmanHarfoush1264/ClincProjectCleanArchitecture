@@ -3,11 +3,11 @@ using FluentValidation;
 
 namespace ClincProject.Core.Features.Users.Commands.Validatiors
 {
-    public class AddUserValidatior : AbstractValidator<AddUserCommand>
+    public class EditUserValidatior : AbstractValidator<EditUserCommand>
     {
 
         #region Constructors
-        public AddUserValidatior()
+        public EditUserValidatior()
         {
             ApplyValidationsRules();
         }
@@ -16,6 +16,10 @@ namespace ClincProject.Core.Features.Users.Commands.Validatiors
         #region Functions
         public void ApplyValidationsRules()
         {
+            RuleFor(x => x.Id)
+                .NotEmpty().WithMessage("Can't be empty.")
+                .NotNull().WithMessage("Can't be blank.");
+
             RuleFor(x => x.FullName)
                 .NotEmpty().WithMessage("Can't be empty.")
                 .NotNull().WithMessage("Can't be blank.")
@@ -31,16 +35,9 @@ namespace ClincProject.Core.Features.Users.Commands.Validatiors
                .NotNull().WithMessage("Can't be blank.")
                .MaximumLength(100);
 
-            RuleFor(x => x.Password)
-               .NotEmpty().WithMessage("Can't be empty.")
-               .NotNull().WithMessage("Can't be blank.");
-
-            RuleFor(x => x.ConfirmPassword)
-               .NotEmpty().WithMessage("Can't be empty.")
-               .NotNull().WithMessage("Can't be blank.")
-               .Equal(x => x.Password).WithMessage("Password And Confirm Password not Equls.");
 
         }
         #endregion
+
     }
 }
