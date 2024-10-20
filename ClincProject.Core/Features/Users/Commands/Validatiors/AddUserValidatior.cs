@@ -38,7 +38,7 @@ namespace ClincProject.Core.Features.Users.Commands.Validatiors
             RuleFor(x => x.ConfirmPassword)
                .NotEmpty().WithMessage("Can't be empty.")
                .NotNull().WithMessage("Can't be blank.")
-               .Equal(x => x.Password).WithMessage("Password And Confirm Password not Equls.");
+               .Equal(x => x.Password).WithMessage("Password And Confirm Password not Equals.");
 
         }
         #endregion

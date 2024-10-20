@@ -9,7 +9,9 @@ namespace ClincProject.Core.Features.Users.Commands.Handlers
 {
     public class UserCommandHandler : CusResponseHandler,
         IRequestHandler<AddUserCommand, CusResponse<string>>,
-        IRequestHandler<EditUserCommand, CusResponse<string>>
+        IRequestHandler<EditUserCommand, CusResponse<string>>,
+        IRequestHandler<DeleteUserCommand, CusResponse<string>>,
+        IRequestHandler<ChangeUserPasswordCommand, CusResponse<string>>
     {
         #region Fields
         private readonly IMapper _mapper;
@@ -90,6 +92,54 @@ namespace ClincProject.Core.Features.Users.Commands.Handlers
                     return BadRequest<string>(result.Errors.FirstOrDefault()?.Description);
 
                 return Success("Updated User is Successfully");
+            }
+            catch (Exception ex)
+            {
+                return ServerError<string>(ex.Message);
+            }
+        }
+
+        public async Task<CusResponse<string>> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
+        {
+            try
+            {
+                var user = await _userManager.FindByIdAsync(request.Id.ToString());
+                if (user == null)
+                    return NotFound<string>($"User with Id: {request.Id} not found!");
+
+                var result = await _userManager.DeleteAsync(user);
+                if (!result.Succeeded)
+                    return BadRequest<string>("Deleted Operation Failed.");
+
+                return Success("Deleted Operation Successfully.");
+            }
+            catch (Exception ex)
+            {
+                return ServerError<string>(ex.Message);
+            }
+        }
+
+        public async Task<CusResponse<string>> Handle(ChangeUserPasswordCommand request, CancellationToken cancellationToken)
+        {
+            try
+            {
+                var user = await _userManager.FindByIdAsync(request.Id.ToString());
+                if (user == null)
+                    return NotFound<string>($"User with Id: {request.Id} not found!");
+
+
+                // there are many ways for change password.
+                // (way 1)  => Find , Delete , Add
+                //var IsHasPassword = await _userManager.HasPasswordAsync(user);
+                //await _userManager.RemovePasswordAsync(user);
+                //await _userManager.AddPasswordAsync(user, request.NewPassword);
+
+
+                var result = await _userManager.ChangePasswordAsync(user, request.CurrentPassword, request.NewPassword);
+                if (!result.Succeeded)
+                    return BadRequest<string>(result.Errors.FirstOrDefault()?.Description);
+
+                return Success("Change Password Operation Successfully.");
             }
             catch (Exception ex)
             {
