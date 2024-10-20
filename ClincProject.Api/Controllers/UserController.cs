@@ -37,5 +37,19 @@ namespace ClincProject.Api.Controllers
             return NewResult(response);
         }
 
+        [HttpDelete("{Id:int}")]
+        public async Task<IActionResult> DeleteUser([FromRoute] int Id)
+        {
+            var response = await Mediator.Send(new DeleteUserCommand(Id));
+            return NewResult(response);
+        }
+
+        [HttpPut("Change Password")]
+        public async Task<IActionResult> ChangePasswordForUser([FromBody] ChangeUserPasswordCommand command)
+        {
+            var response = await Mediator.Send(command);
+            return NewResult(response);
+        }
+
     }
 }
