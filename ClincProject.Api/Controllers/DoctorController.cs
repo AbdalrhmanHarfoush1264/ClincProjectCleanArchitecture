@@ -1,12 +1,14 @@
 ﻿using ClincProject.Api.Bases;
 using ClincProject.Core.Features.Doctors.Commands.Models;
 using ClincProject.Core.Features.Doctors.Queries.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ClincProject.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize("admin,user")]
     public class DoctorController : AppControllerBase
     {
         [HttpGet("List")]

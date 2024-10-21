@@ -53,6 +53,9 @@ namespace ClincProject.Core.Features.Users.Commands.Handlers
                     return new CusResponse<string>(errorMessage);
                 }
 
+                //Add role for this user
+                await _userManager.AddToRoleAsync(user, "user");
+
                 return Created<string>("User Added Successfully.");
             }
             catch (Exception ex)

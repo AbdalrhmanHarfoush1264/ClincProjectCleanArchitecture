@@ -21,6 +21,7 @@ namespace ClincProject.Infrastructure
             services.AddTransient<IDocumentTypeService, DocumentTypeService>();
             services.AddTransient<IDocumentService, DocumentService>();
             services.AddTransient<ICusAuthenticationService, CusAuthenticationService>();
+            services.AddTransient<IAuthorizationService, AuthorizationService>();
 
             return services;
         }
