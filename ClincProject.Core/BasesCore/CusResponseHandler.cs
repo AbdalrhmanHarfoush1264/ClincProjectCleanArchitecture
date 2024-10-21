@@ -61,5 +61,15 @@ namespace ClincProject.Core.BasesCore
                 Data = default(T)
             };
         }
+
+        public CusResponse<T> Unauthorized<T>(string? message = null)
+        {
+            return new CusResponse<T>()
+            {
+                StatusCode = HttpStatusCode.Unauthorized,
+                Successed = false,
+                Message = message == null ? "UnAuthorized" : message
+            };
+        }
     }
 }

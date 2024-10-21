@@ -29,6 +29,7 @@ builder.Services.AddCors(opt =>
         });
 });
 #endregion
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -43,6 +44,7 @@ app.UseHttpsRedirection();
 
 app.UseCors(cors1);
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

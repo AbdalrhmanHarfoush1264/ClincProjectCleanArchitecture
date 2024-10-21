@@ -53,10 +53,6 @@ namespace ClincProject.Core.Features.Users.Commands.Handlers
                     return new CusResponse<string>(errorMessage);
                 }
 
-                //Here you should add role for people.
-                //..................
-
-
                 return Created<string>("User Added Successfully.");
             }
             catch (Exception ex)
