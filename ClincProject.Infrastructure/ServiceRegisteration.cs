@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using System.Text;
 
 namespace ClincProject.Infrastructure
@@ -66,6 +67,42 @@ namespace ClincProject.Infrastructure
                 };
             });
 
+
+            //Swagger Gn
+            services.AddSwaggerGen(s =>
+            {
+                s.SwaggerDoc("v1", new OpenApiInfo { Title = "Clinic Project", Version = "v1" });
+                s.EnableAnnotations();
+
+                s.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, new OpenApiSecurityScheme
+                {
+                    Description = "Jwt Authentication header using the Bearer scheme (....)"
+                ,
+                    Name = "Authorization"
+                ,
+                    In = ParameterLocation.Header
+                ,
+                    Type = SecuritySchemeType.ApiKey
+                ,
+                    Scheme = JwtBearerDefaults.AuthenticationScheme
+                });
+
+
+                s.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                   {
+                     new OpenApiSecurityScheme
+                     {
+                         Reference = new OpenApiReference
+                         {
+                         Type = ReferenceType.SecurityScheme,
+                         Id = JwtBearerDefaults.AuthenticationScheme
+                         }
+                     },
+                     Array.Empty<string>()
+                   }
+                });
+            });
 
 
             return services;

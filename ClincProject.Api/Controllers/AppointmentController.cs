@@ -8,7 +8,7 @@ namespace ClincProject.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    [Authorize("admin,user,doctor")]
     public class AppointmentController : AppControllerBase
     {
 
