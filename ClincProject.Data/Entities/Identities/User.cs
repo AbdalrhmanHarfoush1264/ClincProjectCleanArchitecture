@@ -7,5 +7,7 @@ namespace ClincProject.Data.Entities.Identities
         public string FullName { get; set; } = null!;
         public string? Address { get; set; }
         public string? Country { get; set; }
+
+        public virtual ICollection<UserRefreshToken> UserRefreshTokens { get; set; } = null!;
     }
 }

@@ -1,12 +1,14 @@
 ﻿using ClincProject.Api.Bases;
 using ClincProject.Core.Features.Appointments.Commands.Models;
 using ClincProject.Core.Features.Appointments.Queries.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ClincProject.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class AppointmentController : AppControllerBase
     {
 

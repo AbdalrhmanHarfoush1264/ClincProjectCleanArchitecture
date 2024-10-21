@@ -16,6 +16,7 @@ namespace ClincProject.Infrastructure
                 options.UseSqlServer(configuration.GetConnectionString("default"));
             });
 
+            services.AddTransient<IRefreshTokenRepository, RefreshTokenRepository>();
             services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
             return services;

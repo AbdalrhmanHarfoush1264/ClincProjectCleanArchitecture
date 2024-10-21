@@ -1,8 +1,12 @@
 ﻿using ClincProject.Data.Entities.Identities;
+using ClincProject.Data.Helpers;
 using ClincProject.Infrastructure.Data;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace ClincProject.Infrastructure
 {
@@ -34,6 +38,36 @@ namespace ClincProject.Infrastructure
                 opt.User.RequireUniqueEmail = true;
                 opt.SignIn.RequireConfirmedEmail = false;
             }).AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
+
+
+            //Binding between jwtSettings Json & JwtSettings Class
+            var jwtSettings = new JwtSettings();
+            configuration.GetSection(nameof(jwtSettings)).Bind(jwtSettings);
+            services.AddSingleton(jwtSettings);
+
+            //Jwt Authentication settings 
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(x =>
+            {
+                x.RequireHttpsMetadata = false;
+                x.SaveToken = true;
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = jwtSettings.ValidateIssure,
+                    ValidIssuers = new[] { jwtSettings.Issure },
+                    ValidateIssuerSigningKey = jwtSettings.ValidateIssureSigningKey,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtSettings.Secret)),
+                    ValidateAudience = jwtSettings.validateAudience,
+                    ValidAudience = jwtSettings.Audience,
+                    ValidateLifetime = jwtSettings.ValidateLifeTime
+                };
+            });
+
+
+
             return services;
         }
     }
